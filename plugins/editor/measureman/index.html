@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <link rel="icon" type="image/png" href="icons/tabicon.png"/>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+     <script src="js/imagesaver.js"></script>
+    <script src="js/measureman-elements.js"></script>
+    <script src="js/measureman-model.js"></script>
+    <script src="js/measureman-view.js"></script>
+    <script src="js/measureman-loupe.js"></script>
+    <script src="js/measureman-main.js"></script>
+    <style>
+      body {
+        background: #777;
+        color: #fff;
+        font-size: 10pt;
+      }
+      form {
+        display: inline;
+      }
+      #helptext {
+        padding-left: 1em;
+        font-weight: bold;
+      }
+      canvas {
+        position: absolute;
+        top: 3em;
+        left: 10px;
+        background: transparent;
+      }
+      #background-img {
+        z-index: -1;
+      }
+      #measure {
+        z-index: 0;
+      }
+      #loupe {
+        position: fixed;  /* stays when rest scrolls. */
+        opacity: 0;
+        box-shadow: 3px 3px 15px;
+        border-radius: 10px;
+        color: #000;     /* influences shadow color. */
+      }
+      #download-result {
+        font-size: larger;
+        font-weight: bold;
+        color: #11f;
+        background: #999;
+        padding: 2px;
+      }
+      #download:hover {
+	color: #fff;
+      }
+      
+      @font-face {
+	  	font-family: 'Arial';
+    
+      }
+    </style>
+  </head>
+  <body style="font-family: sans-serif;">
+	
+		  
+    <form>
+      <input id="file-chooser" type="file" accept="image/*">
+      <input id="show-angles" type="checkbox" checked="1">
+      <label for="show-angles">Show &#x2222; angles</label>
+      <input id="show-deltas" type="checkbox"><label for="show-deltas">Show dx/dy</label>
+    </form>
+    <a id="download-result" download="measureman-result.png">[Export transparent overlay]</a>
+    <a id="save-result" href="#">[Save to Drupal 2]</a>
+    <span id="helptext"></span>
+    <canvas id="background-img" width="50" height="50"></canvas>
+    <canvas id="measure" width="50" height="50" style="cursor:url(icons/target-cursor.png) 31 31,crosshair;"></canvas>
+    <canvas id="loupe" width="280" height="280"></canvas>
+   
+	<script>
+		$( document ).ready(function() {
+		    
+			var drupal_referrer = getUrlVars()["referrer"];
+			var drupal_target = getUrlVars()["target"];
+			var drupal_exit = getUrlVars()["exit"];
+			var drupal_loc = getUrlVars()["loc"];
+			var drupal_image =  getUrlVars()["image"];
+			var drupal_title = getUrlVars()["title"];
+			
+			console.log(drupal_image);		
+			
+			function getUrlVars() {
+			    var vars = {};
+			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			        vars[key] = value;
+			    });
+			    return vars;
+			}
+			
+			measureman_init(drupal_referrer,drupal_target,drupal_exit,drupal_loc,drupal_image,drupal_title);
+		});
+   </script>
+  </body>
+</html>
